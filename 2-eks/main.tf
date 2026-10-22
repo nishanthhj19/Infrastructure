@@ -24,17 +24,18 @@ module "eks" {
 
 
   # Managed Node Group(s)
-  eks_managed_node_groups = {
+    eks_managed_node_groups = {
     default = {
       name           = "${var.project}-ng"
+      ami_type       = "AL2023_x86_64_STANDARD"
       instance_types = ["c7i-flex.large"]
-      min_size       = 3
-      max_size       = 5
-      desired_size   = 3
+
+      min_size     = 3
+      max_size     = 5
+      desired_size = 3
 
       subnet_ids = local.private_subnet_ids
 
-      # Disable launch template so remote_access (SSH) can be used
       use_custom_launch_template = false
 
       remote_access = {
